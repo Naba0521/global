@@ -54,10 +54,17 @@ export function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="relative z-50 flex items-center justify-between bg-ink/90 px-5 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-md md:bg-transparent md:px-8 md:pt-4 md:pb-4 md:mix-blend-difference md:backdrop-blur-none">
-        <Link href={`/${locale}`} className="flex min-w-0 items-center gap-3 text-paper" onClick={() => setOpen(false)}>
+      <div className="relative z-50 flex items-center justify-between bg-ink/90 px-5 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-md md:px-8 md:pt-4 md:pb-4">
+        <Link
+          href={`/${locale}`}
+          aria-label="Global Stage Group"
+          className="flex min-w-0 items-center gap-2.5 text-ember"
+          onClick={() => setOpen(false)}
+        >
           <Logo className="h-8 w-8 shrink-0" />
-          <span className="font-display truncate text-xs tracking-[0.16em] sm:text-sm sm:tracking-[0.18em]">GLOBAL STAGE</span>
+          <span className="font-display whitespace-nowrap text-[10px] tracking-[0.14em] sm:text-xs sm:tracking-[0.18em]">
+            GLOBAL STAGE GROUP
+          </span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-paper md:flex">
           {links.map((link) => (
