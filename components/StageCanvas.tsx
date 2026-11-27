@@ -17,6 +17,15 @@ const ServiceStage = dynamic(
   },
 );
 
+const AboutStage = dynamic(() => import("./scene/Stage").then((module) => module.AboutStage), {
+  ssr: false,
+  loading: () => <StagePoster variant="service" />,
+});
+
+export function AboutCanvas() {
+  return <AboutStage />;
+}
+
 export function HeroCanvas() {
   return <HeroStage />;
 }

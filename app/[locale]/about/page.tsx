@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ServiceCanvas } from "@/components/StageCanvas";
+import { AboutCanvas } from "@/components/StageCanvas";
 import { phone, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
 import { alternatesFor } from "@/lib/site";
@@ -33,9 +33,9 @@ export default async function AboutPage({
     <article className="px-5 pb-24 pt-28 md:px-8 md:pt-32">
       <p className="text-xs tracking-[0.22em] text-ember">{copy.meta.title}</p>
       <h1 className="font-display mt-4 max-w-3xl text-4xl leading-tight md:text-7xl">{copy.about.lead}</h1>
-      <div className="mt-12 grid items-center gap-10 md:grid-cols-[16rem_1fr]">
-        <div className="h-56 md:h-64">
-          <ServiceCanvas kind="truss" />
+      <div className="mt-10 grid items-center gap-8 md:mt-12 md:grid-cols-[minmax(0,26rem)_1fr] md:gap-14">
+        <div className="-mx-5 h-80 md:mx-0 md:h-[26rem]">
+          <AboutCanvas />
         </div>
         <div className="max-w-xl">
           <p className="text-lg text-paper">{copy.about.body}</p>

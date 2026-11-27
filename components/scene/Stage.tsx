@@ -4,6 +4,7 @@ import { Component, useEffect, useRef, useState, type ReactNode, type RefObject 
 import { Canvas } from "@react-three/fiber";
 import type { ServiceId } from "@/lib/content";
 import { StagePoster } from "../StagePoster";
+import { AboutScene } from "./AboutScene";
 import { HeroScene } from "./HeroScene";
 import { ServiceScene } from "./ServiceScene";
 
@@ -128,6 +129,14 @@ export function HeroStage() {
   return (
     <Stage variant="hero" camera={{ position: [0, 1.25, 5.6], fov: 36 }}>
       {(mode) => <HeroScene lite={mode !== "full"} still={mode === "still"} />}
+    </Stage>
+  );
+}
+
+export function AboutStage() {
+  return (
+    <Stage variant="service" camera={{ position: [0, 1.6, 4.4], fov: 35 }}>
+      {(mode) => <AboutScene still={mode === "still"} />}
     </Stage>
   );
 }
