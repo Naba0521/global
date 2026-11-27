@@ -98,7 +98,7 @@ export const projects: Project[] = [
     ko: {
       title: "PSY Summer Swag",
       place: "9개 도시",
-      note: "9개 도시를 도는 투어의 트러스.",
+      note: "9개 도시 투어의 트러스를 맡았습니다.",
     },
     en: {
       title: "PSY Summer Swag",
@@ -285,7 +285,7 @@ export const services: {
     ko: {
       name: "Steel Truss",
       line: "경기장의 하중.",
-      body: "알루미늄으로 감당하지 않는 스팬과 하중을 강재 트러스와 스틸 딜레이 타워로 받습니다.",
+      body: "알루미늄으로 감당할 수 없는 스팬과 하중을 스틸 트러스와 스틸 딜레이 타워로 받칩니다.",
       seen: "BIGBANG 2026, 임영웅 IM HERO",
     },
     en: {
@@ -301,7 +301,7 @@ export const services: {
     ko: {
       name: "Layher",
       line: "하나의 모듈.",
-      body: "무대, 스탠드, 전시 구조가 같은 치수로 연결됩니다. 바람이 있는 야외와 짧은 설치 일정에 맞습니다.",
+      body: "무대, 스탠드, 전시 구조가 같은 치수로 연결됩니다. 바람이 부는 야외 현장과 짧은 설치 일정에 적합합니다.",
       seen: "My Chemical Romance, 유튜브 페스티벌, QCE Prudential",
     },
     en: {
@@ -316,8 +316,8 @@ export const services: {
     index: "04",
     ko: {
       name: "Stage Deck",
-      line: "공연면.",
-      body: "높이, 크기, 하중을 그 공연에 맞춘 무대 바닥입니다. 트러스와 레이허 위에 올라앉습니다.",
+      line: "무대 바닥.",
+      body: "높이, 크기, 하중을 공연에 맞춘 무대 바닥입니다. 트러스나 레이허 구조 위에 설치합니다.",
       seen: "스타디움 투어, 돔, 실내 공연장",
     },
     en: {
@@ -334,7 +334,7 @@ export const services: {
       name: "Automation",
       line: "Kinesys · Glosys · Trolley · Hoist",
       body: "조명, 세트, 스크린이 움직이는 구간입니다. 키네시스, 글로시스, 트롤리, 호이스트를 현장에서 운용합니다.",
-      seen: "피지컬: 아시아 370 hoist · 트러스 3,200m, MBC 선택 2026 trolley",
+      seen: "피지컬: 아시아(호이스트 370개, 트러스 3,200m), MBC 선택 2026(트롤리)",
     },
     en: {
       name: "Automation",
@@ -377,7 +377,7 @@ const ko = {
   },
   stats: [
     { value: "370", unit: "호이스트", label: "피지컬: 아시아" },
-    { value: "3,200m", unit: "truss", label: "같은 현장" },
+    { value: "3,200m", unit: "트러스", label: "같은 현장" },
     { value: "9", unit: "도시", label: "PSY Summer Swag" },
   ],
   servicesTitle: "사업",
@@ -385,7 +385,7 @@ const ko = {
   workTitle: "작업",
   workLead: "이름, 장소, 날짜. 구조는 그 아래에 있습니다.",
   latestTitle: "최근",
-  relatedTitle: "이 구조로 선 현장",
+  relatedTitle: "이 구조로 세운 현장",
   whyTitle: "기준",
   why: [
     {
@@ -401,7 +401,7 @@ const ko = {
     {
       index: "03",
       title: "한 팀",
-      body: "트러스, 레이허, 스테이지, 오토메이션을 나눠 맡기지 않습니다. 같은 팀이 잇습니다.",
+      body: "트러스, 레이허, 스테이지, 오토메이션을 나눠 맡기지 않습니다. 처음부터 끝까지 한 팀이 맡습니다.",
     },
   ],
   cta: {
@@ -413,7 +413,7 @@ const ko = {
     lead: "무대 뒤에서 일하는 사람들.",
     body: "글로벌스테이지그룹은 공연, 전시, 기업행사에 필요한 구조물을 설치합니다. 2022년 파주에서 시작했습니다. 대표는 김현준입니다.",
     letter:
-      "무대가 열리기 전, 장비와 사람과 시간이 맞물리는 곳이 우리의 일입니다. 안정적인 구조와 완성도 높은 무대로 응답하겠습니다.",
+      "무대가 열리기 전, 장비와 사람과 시간을 하나로 맞물리게 하는 것이 우리의 일입니다. 안정적인 구조와 완성도 높은 무대로 보답하겠습니다.",
     sign: "대표 김현준",
     repLabel: "대표",
     rep: "김현준",
@@ -439,7 +439,7 @@ const ko = {
   },
   contact: {
     title: "견적",
-    lead: "어떤 현장이든, 일정과 장소를 먼저 받습니다.",
+    lead: "어떤 현장이든, 일정과 장소부터 알려 주십시오.",
     name: "이름",
     company: "회사",
     type: "유형",
@@ -451,7 +451,7 @@ const ko = {
     outdoor: "야외",
     undecided: "미정",
     send: "메일로 작성",
-    note: "공개된 이메일이 없습니다. 버튼을 누르면 내용이 적힌 메일 창이 열립니다. 급한 건은 전화로 주십시오.",
+    note: "공개된 이메일이 없습니다. 버튼을 누르면 내용이 적힌 메일 창이 열립니다. 급한 문의는 전화 주십시오.",
     map: "지도",
   },
   footer: {
