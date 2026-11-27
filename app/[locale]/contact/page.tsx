@@ -1,16 +1,22 @@
 import { notFound } from "next/navigation";
 import { ContactForm } from "@/components/ContactForm";
-import { t } from "@/lib/content";
+import { phone, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
+import { alternatesFor } from "@/lib/site";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const copy = t(isLocale(locale) ? locale : "ko");
-  return { title: copy.contact.title };
+  const { locale: raw } = await params;
+  const locale = isLocale(raw) ? raw : "ko";
+  const copy = t(locale);
+  return {
+    title: copy.contact.title,
+    description: copy.contact.lead,
+    alternates: alternatesFor(locale, "/contact"),
+  };
 }
 
 export default async function ContactPage({
@@ -28,8 +34,8 @@ export default async function ContactPage({
     <article className="px-5 pb-24 pt-28 md:px-8 md:pt-32">
       <h1 className="font-display text-4xl md:text-7xl">{copy.contact.title}</h1>
       <p className="mt-4 max-w-xl text-mist">{copy.contact.lead}</p>
-      <a href="tel:+821066166491" className="font-display mt-8 inline-block text-[clamp(1.75rem,8vw,3.75rem)] text-ember">
-        010-6616-6491
+      <a href={phone.href} className="font-display mt-8 inline-block text-[clamp(1.75rem,8vw,3.75rem)] text-ember">
+        {phone.display}
       </a>
       <div className="mt-14 grid gap-16 md:grid-cols-2">
         <ContactForm locale={raw} />

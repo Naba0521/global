@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ServiceCanvas } from "@/components/StageCanvas";
 import { projectsForSystem, serviceById, services, t } from "@/lib/content";
 import { isLocale, locales } from "@/lib/locale";
+import { alternatesFor } from "@/lib/site";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -19,7 +20,12 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const service = serviceById(slug);
   const lang = isLocale(locale) ? locale : "ko";
-  return { title: service ? service[lang].name : t(lang).servicesTitle };
+  if (!service) return { title: t(lang).servicesTitle };
+  return {
+    title: service[lang].name,
+    description: service[lang].body,
+    alternates: alternatesFor(lang, `/business/${service.id}`),
+  };
 }
 
 export default async function ServicePage({
@@ -46,6 +52,16 @@ export default async function ServicePage({
           <h1 className="font-display text-4xl leading-tight md:text-7xl">{text.name}</h1>
           <p className="mt-4 text-lg text-ember">{text.line}</p>
           <p className="mt-8 max-w-xl text-lg text-paper">{text.body}</p>
+          {text.types && (
+            <ul className="mt-8 grid max-w-xl grid-cols-3 gap-px bg-white/10">
+              {text.types.map((type, index) => (
+                <li key={type} className="bg-ink py-4 pr-3">
+                  <span className="block text-xs text-ember">0{index + 1}</span>
+                  <span className="mt-2 block text-sm text-paper md:text-base">{type}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           <p className="mt-8 text-sm text-mist">{text.seen}</p>
           <Link href={`/${raw}/contact`} className="mt-10 inline-block text-sm tracking-[0.16em] text-paper">
             {copy.nav.contact}
@@ -63,7 +79,7 @@ export default async function ServicePage({
           <ul className="mt-8 grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((project) => (
               <li key={project.id} className="bg-ink">
-                <Link href={`/${raw}/work#${project.id}`} className="grid grid-cols-[5.5rem_1fr] gap-4 p-4">
+                <Link href={`/${raw}/work/${project.id}`} className="grid grid-cols-[5.5rem_1fr] gap-4 p-4">
                   <span className="relative aspect-[3/4]">
                     <Image
                       src={project.image}

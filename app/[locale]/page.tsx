@@ -2,8 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeroCanvas } from "@/components/StageCanvas";
 import { notFound } from "next/navigation";
-import { projects, services, t } from "@/lib/content";
+import { phone, projects, services, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
+import { alternatesFor } from "@/lib/site";
+
+const clients = ["MAMA", "Netflix", "Chanel", "Audemars Piguet", "SBS", "MBC", "Seoul Fashion Week"];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return { alternates: alternatesFor(isLocale(locale) ? locale : "ko") };
+}
 
 export default async function HomePage({
   params,
@@ -36,7 +48,7 @@ export default async function HomePage({
           </h1>
           <p className="mt-6 text-sm tracking-[0.18em] text-mist">{copy.hero.sub}</p>
         </div>
-        <p className="absolute bottom-8 right-6 hidden origin-bottom-right -rotate-90 text-[10px] tracking-[0.35em] text-mist md:block">
+        <p className="absolute bottom-8 right-6 hidden origin-bottom-right -rotate-90 text-[11px] tracking-[0.35em] text-mist md:block">
           {copy.hero.scroll}
         </p>
       </section>
@@ -51,7 +63,7 @@ export default async function HomePage({
         ))}
       </section>
 
-      <section className="px-5 py-16 md:px-8 md:py-20">
+      <section id="business" className="scroll-mt-16 px-5 py-16 md:px-8 md:py-20">
         <p className="text-xs tracking-[0.22em] text-ember">{copy.servicesTitle}</p>
         <h2 className="font-display mt-3 max-w-xl text-3xl leading-tight text-paper md:text-4xl">{copy.servicesLead}</h2>
         <ul className="mt-12">
@@ -88,7 +100,7 @@ export default async function HomePage({
           {featured.map((project) => (
             <Link
               key={project.id}
-              href={`/${locale}/work#${project.id}`}
+              href={`/${locale}/work/${project.id}`}
               className="relative flex min-h-[62vh] w-[82%] shrink-0 snap-start flex-col justify-end overflow-hidden border border-white/10 p-5 md:min-h-[68vh] md:w-[42%] md:p-6"
             >
               <Image
@@ -113,7 +125,7 @@ export default async function HomePage({
         <h2 className="font-display text-3xl">{copy.latestTitle}</h2>
         <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-3">
           {latest.map((project) => (
-            <Link key={project.id} href={`/${locale}/work#${project.id}`} className="grid grid-cols-[7.25rem_1fr] bg-ink md:block">
+            <Link key={project.id} href={`/${locale}/work/${project.id}`} className="grid grid-cols-[7.25rem_1fr] bg-ink md:block">
               <div className="relative min-h-36 md:aspect-[4/5]">
                 <Image
                   src={project.image}
@@ -136,6 +148,13 @@ export default async function HomePage({
         </div>
       </section>
 
+      <section className="border-t border-white/10 px-5 py-12 md:px-8 md:py-16">
+        <h2 className="text-xs tracking-[0.22em] text-ember">{copy.clientsTitle}</h2>
+        <p className="font-display mt-5 text-2xl leading-snug text-paper md:text-4xl">
+          {clients.join(" · ")}
+        </p>
+      </section>
+
       <section className="border-t border-white/10 px-5 py-20 md:px-8">
         <h2 className="font-display text-3xl md:text-4xl">{copy.whyTitle}</h2>
         <div className="mt-10 grid gap-10 md:grid-cols-3">
@@ -155,8 +174,8 @@ export default async function HomePage({
             <h2 className="font-display text-3xl leading-tight md:text-6xl">{copy.cta.title}</h2>
             <p className="mt-4 text-mist">{copy.cta.body}</p>
           </div>
-          <a href="tel:+821066166491" className="font-display text-[clamp(1.6rem,7vw,3rem)] text-ember md:text-5xl">
-            {copy.cta.phone}
+          <a href={phone.href} className="font-display text-[clamp(1.6rem,7vw,3rem)] text-ember md:text-5xl">
+            {phone.display}
           </a>
         </div>
       </section>

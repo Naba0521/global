@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
-import { t } from "@/lib/content";
+import { contactEmail, t } from "@/lib/content";
 import type { Locale } from "@/lib/locale";
 
 export function ContactForm({ locale }: { locale: Locale }) {
@@ -15,12 +15,14 @@ export function ContactForm({ locale }: { locale: Locale }) {
       `${copy.contact.company}: ${data.get("company") ?? ""}`,
       `${copy.contact.type}: ${data.get("type") ?? ""}`,
       `${copy.contact.date}: ${data.get("date") ?? ""}`,
+      `${copy.contact.place}: ${data.get("place") ?? ""}`,
+      `${copy.contact.setting}: ${data.get("setting") ?? ""}`,
       "",
       String(data.get("message") ?? ""),
     ];
     const subject = encodeURIComponent("Global Stage Group");
     const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${contactEmail ?? ""}?subject=${subject}&body=${body}`;
   }
 
   return (
@@ -40,6 +42,20 @@ export function ContactForm({ locale }: { locale: Locale }) {
         </select>
       </label>
       <Field label={copy.contact.date} name="date" />
+      <Field label={copy.contact.place} name="place" />
+      <fieldset className="grid gap-2 text-xs tracking-[0.16em] text-mist">
+        <legend className="mb-2">{copy.contact.setting}</legend>
+        <div className="flex flex-wrap gap-2">
+          {[copy.contact.indoor, copy.contact.outdoor, copy.contact.undecided].map((option) => (
+            <label key={option} className="cursor-pointer">
+              <input type="radio" name="setting" value={option} className="peer sr-only" />
+              <span className="inline-block min-h-11 border border-white/15 px-4 py-3 text-sm tracking-normal text-paper peer-checked:border-ember peer-checked:text-ember peer-focus-visible:outline-2 peer-focus-visible:outline-ember">
+                {option}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <label className="grid gap-2 text-xs tracking-[0.16em] text-mist">
         {copy.contact.message}
         <textarea
@@ -54,7 +70,7 @@ export function ContactForm({ locale }: { locale: Locale }) {
       >
         {copy.contact.send}
       </button>
-      <p className="text-sm text-mist">{copy.contact.note}</p>
+      {!contactEmail && <p className="text-sm text-mist">{copy.contact.note}</p>}
     </form>
   );
 }

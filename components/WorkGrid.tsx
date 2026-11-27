@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { projects, t, type Category } from "@/lib/content";
 import type { Locale } from "@/lib/locale";
@@ -44,30 +45,31 @@ export function WorkGrid({ locale }: { locale: Locale }) {
         {list.map((project) => {
           const text = project[locale];
           return (
-            <li
-              key={project.id}
-              id={project.id}
-              className="grid scroll-mt-28 grid-cols-[5.5rem_1fr] items-center gap-4 border-t border-white/12 py-4 md:grid-cols-12 md:py-7"
-            >
-              <div className="relative aspect-[3/4] md:col-span-2">
-                <Image
-                  src={project.image}
-                  alt={text.title}
-                  fill
-                  sizes="(min-width: 768px) 18vw, 5.5rem"
-                  className="object-cover"
-                />
-              </div>
-              <div className="min-w-0 md:col-span-10 md:grid md:grid-cols-10 md:items-end">
-                <p className="font-display text-sm text-ember md:col-span-2 md:text-base">{project.date}</p>
-                <div className="md:col-span-5">
-                  <h2 className="font-display text-xl leading-tight text-paper md:text-3xl">{text.title}</h2>
-                  <p className="mt-1 text-sm text-mist">{text.place}</p>
+            <li key={project.id} id={project.id} className="scroll-mt-28 border-t border-white/12">
+              <Link
+                href={`/${locale}/work/${project.id}`}
+                className="grid grid-cols-[7.5rem_1fr] items-center gap-4 py-4 md:grid-cols-12 md:py-7"
+              >
+                <div className="relative aspect-[3/4] md:col-span-2">
+                  <Image
+                    src={project.image}
+                    alt={text.title}
+                    fill
+                    sizes="(min-width: 768px) 18vw, 7.5rem"
+                    className="object-cover"
+                  />
                 </div>
-                <p className="mt-2 text-xs tracking-[0.14em] text-mist md:col-span-3 md:mt-0 md:text-right">
-                  {project.systems.map((system) => copy.system[system]).join(" · ")}
-                </p>
-              </div>
+                <div className="min-w-0 md:col-span-10 md:grid md:grid-cols-10 md:items-end">
+                  <p className="font-display text-sm text-ember md:col-span-2 md:text-base">{project.date}</p>
+                  <div className="md:col-span-5">
+                    <h2 className="font-display text-xl leading-tight text-paper md:text-3xl">{text.title}</h2>
+                    <p className="mt-1 text-sm text-mist">{text.place}</p>
+                  </div>
+                  <p className="mt-2 text-xs tracking-[0.14em] text-mist md:col-span-3 md:mt-0 md:text-right">
+                    {project.systems.map((system) => copy.system[system]).join(" · ")}
+                  </p>
+                </div>
+              </Link>
             </li>
           );
         })}

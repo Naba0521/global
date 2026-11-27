@@ -2,15 +2,21 @@ import { notFound } from "next/navigation";
 import { WorkGrid } from "@/components/WorkGrid";
 import { t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
+import { alternatesFor } from "@/lib/site";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const copy = t(isLocale(locale) ? locale : "ko");
-  return { title: copy.workPage.title };
+  const { locale: raw } = await params;
+  const locale = isLocale(raw) ? raw : "ko";
+  const copy = t(locale);
+  return {
+    title: copy.workPage.title,
+    description: copy.workLead,
+    alternates: alternatesFor(locale, "/work"),
+  };
 }
 
 export default async function WorkPage({

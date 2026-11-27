@@ -1,17 +1,23 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ServiceCanvas } from "@/components/StageCanvas";
-import { t } from "@/lib/content";
+import { phone, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
+import { alternatesFor } from "@/lib/site";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const copy = t(isLocale(locale) ? locale : "ko");
-  return { title: copy.about.title };
+  const { locale: raw } = await params;
+  const locale = isLocale(raw) ? raw : "ko";
+  const copy = t(locale);
+  return {
+    title: copy.about.title,
+    description: copy.about.body,
+    alternates: alternatesFor(locale, "/about"),
+  };
 }
 
 export default async function AboutPage({
@@ -53,7 +59,7 @@ export default async function AboutPage({
         <div>
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.about.phoneLabel}</dt>
           <dd className="mt-2 text-lg">
-            <a href="tel:+821066166491">010-6616-6491</a>
+            <a href={phone.href}>{phone.display}</a>
           </dd>
         </div>
       </dl>

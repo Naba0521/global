@@ -12,9 +12,12 @@ export type Project = {
   date: string;
   featured?: boolean;
   latest?: boolean;
-  ko: { title: string; place: string };
-  en: { title: string; place: string };
+  ko: { title: string; place: string; note?: string };
+  en: { title: string; place: string; note?: string };
 };
+
+export const contactEmail: string | null = null;
+export const phone = { display: "010-6616-6491", href: "tel:+821066166491" };
 
 export const projects: Project[] = [
   {
@@ -74,8 +77,16 @@ export const projects: Project[] = [
     systems: ["automation", "truss"],
     date: "2025.01.03–02.23",
     featured: true,
-    ko: { title: "피지컬: 아시아", place: "킨텍스" },
-    en: { title: "Physical: Asia", place: "KINTEX" },
+    ko: {
+      title: "피지컬: 아시아",
+      place: "킨텍스",
+      note: "호이스트 370개, 트러스 3,200m.",
+    },
+    en: {
+      title: "Physical: Asia",
+      place: "KINTEX",
+      note: "370 hoists and 3,200m of truss.",
+    },
   },
   {
     id: "psy",
@@ -84,8 +95,16 @@ export const projects: Project[] = [
     systems: ["truss"],
     date: "2025–2026",
     featured: true,
-    ko: { title: "PSY Summer Swag", place: "9개 도시" },
-    en: { title: "PSY Summer Swag", place: "9 cities" },
+    ko: {
+      title: "PSY Summer Swag",
+      place: "9개 도시",
+      note: "9개 도시를 도는 투어의 트러스.",
+    },
+    en: {
+      title: "PSY Summer Swag",
+      place: "9 cities",
+      note: "Truss for a nine-city tour.",
+    },
   },
   {
     id: "netflix",
@@ -214,8 +233,16 @@ export const projects: Project[] = [
     category: "broadcast",
     systems: ["truss", "automation"],
     date: "2026.06.03",
-    ko: { title: "MBC 선택 2026", place: "상암 MBC" },
-    en: { title: "MBC Election 2026", place: "Sangam MBC" },
+    ko: {
+      title: "MBC 선택 2026",
+      place: "상암 MBC",
+      note: "트러스와 트롤리.",
+    },
+    en: {
+      title: "MBC Election 2026",
+      place: "Sangam MBC",
+      note: "Truss and trolley.",
+    },
   },
   {
     id: "gayo",
@@ -231,8 +258,8 @@ export const projects: Project[] = [
 export const services: {
   id: ServiceId;
   index: string;
-  ko: { name: string; line: string; body: string; seen: string };
-  en: { name: string; line: string; body: string; seen: string };
+  ko: { name: string; line: string; body: string; seen: string; types?: string[] };
+  en: { name: string; line: string; body: string; seen: string; types?: string[] };
 }[] = [
   {
     id: "truss",
@@ -242,12 +269,14 @@ export const services: {
       line: "직선, 원형, 기둥.",
       body: "가볍고 빠른 알루미늄 시스템 트러스입니다. 콘서트, 전시, 음악방송의 뼈대를 현장에 맞춰 조립합니다.",
       seen: "MBC 대학가요제, 프로젝트문, AKMU, MAMA",
+      types: ["직선 트러스", "원형 트러스", "기둥 트러스"],
     },
     en: {
       name: "Truss",
       line: "Straight, circle, tower.",
       body: "A light aluminum system, assembled to the room. It is the frame for concerts, exhibitions, and music broadcasts.",
       seen: "MBC University Song Festival, Project Moon, AKMU, MAMA",
+      types: ["Straight truss", "Circle truss", "Pillar truss"],
     },
   },
   {
@@ -328,7 +357,18 @@ const ko = {
     contact: "견적",
     menu: "메뉴",
     close: "닫기",
+    call: "전화",
   },
+  detail: {
+    date: "일정",
+    place: "장소",
+    category: "분야",
+    systems: "구조",
+    all: "작업 전체",
+    next: "다음 작업",
+    ask: "비슷한 현장이 있다면, 일정과 장소부터 알려 주십시오.",
+  },
+  clientsTitle: "함께한 무대",
   hero: {
     kicker: "Global Stage Group",
     title: "보이지 않는 곳에서,\n무대를 완성합니다.",
@@ -367,11 +407,10 @@ const ko = {
   cta: {
     title: "현장을 알려 주십시오.",
     body: "일정, 장소, 규모. 전화가 가장 빠릅니다.",
-    phone: "010-6616-6491",
   },
   about: {
     title: "회사",
-    lead: "The people behind the stage.",
+    lead: "무대 뒤에서 일하는 사람들.",
     body: "글로벌스테이지그룹은 공연, 전시, 기업행사에 필요한 구조물을 설치합니다. 2022년 파주에서 시작했습니다. 대표는 김현준입니다.",
     letter:
       "무대가 열리기 전, 장비와 사람과 시간이 맞물리는 곳이 우리의 일입니다. 안정적인 구조와 완성도 높은 무대로 응답하겠습니다.",
@@ -406,6 +445,11 @@ const ko = {
     type: "유형",
     date: "일정",
     message: "내용",
+    place: "장소",
+    setting: "실내 / 야외",
+    indoor: "실내",
+    outdoor: "야외",
+    undecided: "미정",
     send: "메일로 작성",
     note: "공개된 이메일이 없습니다. 버튼을 누르면 내용이 적힌 메일 창이 열립니다. 급한 건은 전화로 주십시오.",
     map: "지도",
@@ -434,7 +478,18 @@ const en = {
     contact: "Quote",
     menu: "Menu",
     close: "Close",
+    call: "Call",
   },
+  detail: {
+    date: "Date",
+    place: "Place",
+    category: "Field",
+    systems: "Structure",
+    all: "All work",
+    next: "Next",
+    ask: "If your site is like this one, send the date and the place.",
+  },
+  clientsTitle: "Stages we built for",
   hero: {
     kicker: "Global Stage Group",
     title: "The people\nbehind the stage.",
@@ -473,7 +528,6 @@ const en = {
   cta: {
     title: "Tell us the site.",
     body: "Date, place, scale. A call is the fastest way.",
-    phone: "010-6616-6491",
   },
   about: {
     title: "Company",
@@ -512,6 +566,11 @@ const en = {
     type: "Type",
     date: "Date",
     message: "Note",
+    place: "Place",
+    setting: "Indoor / outdoor",
+    indoor: "Indoor",
+    outdoor: "Outdoor",
+    undecided: "Not yet",
     send: "Open in mail",
     note: "There is no public email yet. This opens a draft with your note. For anything urgent, call.",
     map: "Map",
@@ -536,6 +595,15 @@ export function t(locale: Locale): Copy {
 
 export function serviceById(id: string) {
   return services.find((item) => item.id === id);
+}
+
+export function projectById(id: string) {
+  return projects.find((project) => project.id === id);
+}
+
+export function projectAfter(id: string) {
+  const index = projects.findIndex((project) => project.id === id);
+  return projects[(index + 1) % projects.length];
 }
 
 export function projectsForSystem(system: SystemTag) {

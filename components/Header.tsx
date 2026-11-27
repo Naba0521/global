@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { services, t } from "@/lib/content";
 import { isLocale, otherLocale, type Locale } from "@/lib/locale";
 import { Logo } from "./Logo";
@@ -12,6 +12,8 @@ export function Header({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const menu = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
 
   function go(href: string) {
     setOpen(false);
@@ -38,6 +40,18 @@ export function Header({ locale }: { locale: Locale }) {
   }, [open]);
 
   useEffect(() => {
+    if (!open) return;
+    menu.current?.querySelector<HTMLElement>("a")?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
     const wide = window.matchMedia("(min-width: 768px)");
     const closeIfWide = () => {
       if (wide.matches) setOpen(false);
@@ -48,6 +62,7 @@ export function Header({ locale }: { locale: Locale }) {
 
   const links = [
     { href: `/${locale}/about`, label: copy.nav.about },
+    { href: `/${locale}#business`, label: copy.servicesTitle, wide: true },
     { href: `/${locale}/work`, label: copy.nav.work },
     { href: `/${locale}/contact`, label: copy.nav.contact },
   ];
@@ -62,7 +77,7 @@ export function Header({ locale }: { locale: Locale }) {
           onClick={() => setOpen(false)}
         >
           <Logo className="h-8 w-8 shrink-0" />
-          <span className="font-display whitespace-nowrap text-[10px] tracking-[0.14em] sm:text-xs sm:tracking-[0.18em]">
+          <span className="font-display whitespace-nowrap text-[11px] tracking-[0.14em] sm:text-xs sm:tracking-[0.18em]">
             GLOBAL STAGE GROUP
           </span>
         </Link>
@@ -75,17 +90,23 @@ export function Header({ locale }: { locale: Locale }) {
           <LocaleSwitch locale={locale} href={swapped} />
         </nav>
         <button
+          ref={toggle}
           type="button"
           className="min-h-11 min-w-11 px-2 text-sm tracking-[0.16em] text-paper md:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
+          aria-controls="site-menu"
         >
           {open ? copy.nav.close : copy.nav.menu}
         </button>
       </div>
       {open && (
-        <div className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-10 pt-24 text-paper md:hidden">
-          {links.map((link) => (
+        <div
+          id="site-menu"
+          ref={menu}
+          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-10 pt-24 text-paper md:hidden"
+        >
+          {links.filter((link) => !link.wide).map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -155,9 +176,9 @@ function LocaleSwitch({
           : undefined
       }
     >
-      <span className={safe === "ko" ? "text-ember" : "text-white/50"}>KR</span>
+      <span className={safe === "ko" ? "text-ember" : "text-white/65"}>KR</span>
       <span className="text-white/30">/</span>
-      <span className={safe === "en" ? "text-ember" : "text-white/50"}>EN</span>
+      <span className={safe === "en" ? "text-ember" : "text-white/65"}>EN</span>
     </Link>
   );
 }

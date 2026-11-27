@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { services, t } from "@/lib/content";
+import { phone, services, t } from "@/lib/content";
 import type { Locale } from "@/lib/locale";
 
 export function Footer({ locale }: { locale: Locale }) {
@@ -16,8 +16,8 @@ export function Footer({ locale }: { locale: Locale }) {
           <p className="mt-2 max-w-xs">{copy.about.yard}</p>
         </div>
         <div className="md:text-right">
-          <a className="text-paper" href="tel:+821066166491">
-            010-6616-6491
+          <a className="text-paper" href={phone.href}>
+            {phone.display}
           </a>
           <p className="mt-2">
             <a href="https://www.instagram.com/globalstagegroup/" target="_blank" rel="noreferrer">
@@ -34,7 +34,10 @@ export function Footer({ locale }: { locale: Locale }) {
         ))}
       </nav>
       <div className="mt-8 flex flex-col gap-3 text-xs tracking-[0.16em] sm:flex-row sm:items-center sm:justify-between">
-        <span>{copy.footer.rights}</span>
+        <span>
+          {copy.footer.rights} · {copy.about.repLabel} {copy.about.rep} · {copy.about.regLabel}{" "}
+          {copy.about.reg}
+        </span>
         <Link href={`/${locale}/contact`}>{copy.nav.contact}</Link>
       </div>
     </footer>
