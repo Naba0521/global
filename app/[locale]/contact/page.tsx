@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { ContactForm } from "@/components/ContactForm";
+import { rise } from "@/lib/rise";
 import { phone, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
 import { alternatesFor } from "@/lib/site";
@@ -32,12 +33,15 @@ export default async function ContactPage({
 
   return (
     <article className="px-5 pb-24 pt-28 md:px-8 md:pt-32">
-      <h1 className="font-display text-4xl md:text-7xl">{copy.contact.title}</h1>
-      <p className="mt-4 max-w-xl text-mist">{copy.contact.lead}</p>
+      <p className="text-xs tracking-[0.22em] text-ember">{copy.meta.title}</p>
+      <h1 className="mask mt-4 font-display text-4xl md:text-7xl">
+        <span className="enter block">{copy.contact.title}</span>
+      </h1>
+      <p {...rise(1)} className="mt-4 max-w-xl text-mist">{copy.contact.lead}</p>
       <a href={phone.href} className="font-display mt-8 inline-block text-[clamp(1.75rem,8vw,3.75rem)] text-ember">
         {phone.display}
       </a>
-      <div className="mt-14 grid gap-16 md:grid-cols-2">
+      <div {...rise(2)} className="mt-14 grid gap-16 md:grid-cols-2">
         <ContactForm locale={raw} />
         <div className="grid content-start gap-8">
           <Address

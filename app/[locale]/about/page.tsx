@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { rise } from "@/lib/rise";
 import { AboutCanvas } from "@/components/StageCanvas";
 import { phone, t } from "@/lib/content";
 import { isLocale } from "@/lib/locale";
@@ -32,31 +33,33 @@ export default async function AboutPage({
   return (
     <article className="px-5 pb-24 pt-28 md:px-8 md:pt-32">
       <p className="text-xs tracking-[0.22em] text-ember">{copy.meta.title}</p>
-      <h1 className="font-display mt-4 max-w-3xl text-4xl leading-tight md:text-7xl">{copy.about.lead}</h1>
+      <h1 className="mask mt-4 max-w-3xl font-display text-4xl leading-tight md:text-7xl">
+        <span className="enter block">{copy.about.lead}</span>
+      </h1>
       <div className="mt-10 grid items-center gap-8 md:mt-12 md:grid-cols-[minmax(0,26rem)_1fr] md:gap-14">
         <div className="-mx-5 h-80 md:mx-0 md:h-[26rem]">
           <AboutCanvas />
         </div>
-        <div className="max-w-xl">
+        <div {...rise(1)} className="max-w-xl">
           <p className="text-lg text-paper">{copy.about.body}</p>
           <p className="mt-8 text-mist">{copy.about.letter}</p>
           <p className="mt-6 text-sm tracking-[0.16em] text-ember">{copy.about.sign}</p>
         </div>
       </div>
-      <dl className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
+      <dl {...rise()} className="-mx-5 mt-16 grid gap-px border-y border-white/10 bg-white/10 sm:grid-cols-2 md:-mx-8 lg:grid-cols-4">
+        <div className="bg-ink px-5 py-8 md:px-8">
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.about.foundedLabel}</dt>
           <dd className="mt-2 text-lg">{copy.about.founded}</dd>
         </div>
-        <div>
+        <div className="bg-ink px-5 py-8 md:px-8">
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.about.repLabel}</dt>
           <dd className="mt-2 text-lg">{copy.about.rep}</dd>
         </div>
-        <div>
+        <div className="bg-ink px-5 py-8 md:px-8">
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.about.regLabel}</dt>
           <dd className="mt-2 text-lg">{copy.about.reg}</dd>
         </div>
-        <div>
+        <div className="bg-ink px-5 py-8 md:px-8">
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.about.phoneLabel}</dt>
           <dd className="mt-2 text-lg">
             <a href={phone.href}>{phone.display}</a>

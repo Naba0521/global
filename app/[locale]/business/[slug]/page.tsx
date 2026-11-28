@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { rise } from "@/lib/rise";
 import { ServiceCanvas } from "@/components/StageCanvas";
 import { projectsForSystem, serviceById, services, t } from "@/lib/content";
 import { isLocale, locales } from "@/lib/locale";
@@ -49,7 +50,9 @@ export default async function ServicePage({
           <ServiceCanvas kind={service.id} />
         </div>
         <div className="order-1 lg:order-2 lg:pt-10">
-          <h1 className="font-display text-4xl leading-tight md:text-7xl">{text.name}</h1>
+          <h1 className="mask font-display text-4xl leading-tight md:text-7xl">
+            <span className="enter block">{text.name}</span>
+          </h1>
           <p className="mt-4 text-lg text-ember">{text.line}</p>
           <p className="mt-8 max-w-xl text-lg text-paper">{text.body}</p>
           {text.types && (
@@ -76,25 +79,24 @@ export default async function ServicePage({
               {copy.nav.work}
             </Link>
           </div>
-          <ul className="mt-8 grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((project) => (
-              <li key={project.id} className="bg-ink">
-                <Link href={`/${raw}/work/${project.id}`} className="grid grid-cols-[5.5rem_1fr] gap-4 p-4">
-                  <span className="relative aspect-[3/4]">
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      sizes="5.5rem"
-                      className="object-cover"
-                    />
-                  </span>
-                  <span className="min-w-0">
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((project, index) => (
+              <li key={project.id}>
+                <Link href={`/${raw}/work/${project.id}`} {...rise(index % 3)} data-frame="" className="group relative block aspect-[4/5] overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="frame-photo object-cover"
+                  />
+                  <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent" />
+                  <span className="absolute inset-x-0 bottom-0 p-5">
                     <span className="block text-xs tracking-[0.14em] text-ember">{project.date}</span>
-                    <span className="font-display mt-2 block text-xl leading-tight text-paper">
+                    <span className="font-display mt-2 block text-2xl leading-tight text-paper">
                       {project[raw].title}
                     </span>
-                    <span className="mt-1 block text-sm text-mist">{project[raw].place}</span>
+                    <span className="mt-2 block text-sm text-paper/75">{project[raw].place}</span>
                   </span>
                 </Link>
               </li>

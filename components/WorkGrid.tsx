@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { projects, t, type Category } from "@/lib/content";
+import { rise } from "@/lib/rise";
 import type { Locale } from "@/lib/locale";
 
 const filters: (Category | "all")[] = [
@@ -24,50 +25,39 @@ export function WorkGrid({ locale }: { locale: Locale }) {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-x-6 gap-y-3">
         {filters.map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setFilter(item)}
             aria-pressed={filter === item}
-            className={`min-h-10 border px-3 py-2 text-xs tracking-[0.16em] ${
-              filter === item
-                ? "border-ember bg-ember text-ink"
-                : "border-white/20 text-paper"
+            className={`min-h-10 text-xs tracking-[0.18em] underline-offset-8 ${
+              filter === item ? "text-ember underline decoration-ember" : "text-mist"
             }`}
           >
             {labels[item]}
           </button>
         ))}
       </div>
-      <ul className="mt-10">
-        {list.map((project) => {
+      <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {list.map((project, index) => {
           const text = project[locale];
           return (
-            <li key={project.id} id={project.id} className="scroll-mt-28 border-t border-white/12">
-              <Link
-                href={`/${locale}/work/${project.id}`}
-                className="grid grid-cols-[7.5rem_1fr] items-center gap-4 py-4 md:grid-cols-12 md:py-7"
-              >
-                <div className="relative aspect-[3/4] md:col-span-2">
-                  <Image
-                    src={project.image}
-                    alt={text.title}
-                    fill
-                    sizes="(min-width: 768px) 18vw, 7.5rem"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="min-w-0 md:col-span-10 md:grid md:grid-cols-10 md:items-end">
-                  <p className="font-display text-sm text-ember md:col-span-2 md:text-base">{project.date}</p>
-                  <div className="md:col-span-5">
-                    <h2 className="font-display text-xl leading-tight text-paper md:text-3xl">{text.title}</h2>
-                    <p className="mt-1 text-sm text-mist">{text.place}</p>
-                  </div>
-                  <p className="mt-2 text-xs tracking-[0.14em] text-mist md:col-span-3 md:mt-0 md:text-right">
-                    {project.systems.map((system) => copy.system[system]).join(" · ")}
-                  </p>
+            <li key={project.id} id={project.id} className="scroll-mt-28">
+              <Link href={`/${locale}/work/${project.id}`} {...rise(index % 3)} data-frame="" className="group relative block aspect-[4/5] overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={text.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="frame-photo object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="text-xs tracking-[0.16em] text-ember">{project.date}</p>
+                  <h2 className="font-display mt-2 text-2xl leading-tight text-paper">{text.title}</h2>
+                  <p className="mt-2 text-sm text-paper/75">{text.place}</p>
                 </div>
               </Link>
             </li>

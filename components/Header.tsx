@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { services, t } from "@/lib/content";
 import { isLocale, otherLocale, type Locale } from "@/lib/locale";
+import { delay } from "@/lib/rise";
 import { Logo } from "./Logo";
 
 export function Header({ locale }: { locale: Locale }) {
@@ -69,7 +70,7 @@ export function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="relative z-50 flex items-center justify-between bg-ink/90 px-5 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-md md:px-8 md:pt-4 md:pb-4">
+      <div className="relative z-50 flex items-center justify-between border-b border-white/10 bg-ink/90 px-5 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-md md:px-8 md:pt-4 md:pb-4">
         <Link
           href={`/${locale}`}
           aria-label="Global Stage Group"
@@ -81,9 +82,14 @@ export function Header({ locale }: { locale: Locale }) {
             GLOBAL STAGE GROUP
           </span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm text-paper md:flex">
+        <nav className="hidden items-center gap-8 text-sm md:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="tracking-wide">
+            <Link
+              key={link.href}
+              href={link.href}
+              data-active={activeLink(pathname, link.href)}
+              className={`nav-link tracking-wide ${activeLink(pathname, link.href) ? "text-ember" : "text-paper"}`}
+            >
               {link.label}
             </Link>
           ))}
@@ -104,13 +110,14 @@ export function Header({ locale }: { locale: Locale }) {
         <div
           id="site-menu"
           ref={menu}
-          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-10 pt-24 text-paper md:hidden"
+          className="menu-panel fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-10 pt-24 text-paper md:hidden"
         >
-          {links.filter((link) => !link.wide).map((link) => (
+          {links.filter((link) => !link.wide).map((link, index) => (
             <Link
               key={link.href}
               href={link.href}
-              className="border-t border-white/15 py-5 font-display text-4xl"
+              style={delay(index)}
+              className="menu-item border-t border-white/15 py-5 font-display text-4xl"
               onClick={(event) => {
                 event.preventDefault();
                 go(link.href);
@@ -120,11 +127,12 @@ export function Header({ locale }: { locale: Locale }) {
             </Link>
           ))}
           <div className="mt-6 flex flex-col text-mist">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <Link
                 key={service.id}
                 href={`/${locale}/business/${service.id}`}
-                className="py-3"
+                style={delay(index + 3)}
+                className="menu-item py-3"
                 onClick={(event) => {
                   event.preventDefault();
                   go(`/${locale}/business/${service.id}`);
@@ -143,6 +151,11 @@ export function Header({ locale }: { locale: Locale }) {
       )}
     </header>
   );
+}
+
+function activeLink(pathname: string, href: string) {
+  if (href.includes("#")) return pathname.includes("/business/");
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function swapLocale(pathname: string, from: Locale, to: Locale) {

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { rise } from "@/lib/rise";
 import { phone, projectAfter, projectById, projects, t } from "@/lib/content";
 import { isLocale, locales } from "@/lib/locale";
 import { alternatesFor } from "@/lib/site";
@@ -48,22 +49,24 @@ export default async function ProjectPage({
         <Link href={`/${locale}/work`} className="text-xs tracking-[0.18em] text-mist">
           ← {copy.detail.all}
         </Link>
-        <h1 className="font-display mt-6 max-w-4xl text-4xl leading-tight md:text-7xl">{text.title}</h1>
+        <h1 className="mask mt-6 max-w-4xl font-display text-4xl leading-tight md:text-7xl">
+          <span className="enter block">{text.title}</span>
+        </h1>
         {text.note && <p className="mt-5 max-w-2xl text-lg text-ember md:text-2xl">{text.note}</p>}
       </div>
 
-      <div className="relative mt-10 aspect-[4/5] md:mx-8 md:aspect-[16/9]">
+      <div {...rise()} data-frame="" className="group relative mt-10 aspect-[4/5] overflow-hidden md:mx-8 md:aspect-[16/9]">
         <Image
           src={project.image}
           alt={text.title}
           fill
           priority
           sizes="(min-width: 768px) 95vw, 100vw"
-          className="object-cover"
+          className="frame-photo object-cover"
         />
       </div>
 
-      <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 px-5 md:grid-cols-4 md:px-8">
+      <dl {...rise(1)} className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 px-5 md:grid-cols-4 md:px-8">
         <div>
           <dt className="text-xs tracking-[0.18em] text-ember">{copy.detail.date}</dt>
           <dd className="mt-2 text-lg">{project.date}</dd>

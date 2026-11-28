@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CallBar } from "@/components/CallBar";
+import { Motion } from "@/components/Motion";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { LocaleLang } from "@/components/LocaleLang";
@@ -90,6 +91,7 @@ function LocaleFrame({
       />
       <Header locale={locale} />
       <main id="content">{children}</main>
+      <Motion />
       <Footer locale={locale} />
       <CallBar locale={locale} />
     </>

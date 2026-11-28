@@ -16,7 +16,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <p className="mt-2 max-w-xs">{copy.about.yard}</p>
         </div>
         <div className="md:text-right">
-          <a className="text-paper" href={phone.href}>
+          <a className="font-display text-2xl text-paper" href={phone.href}>
             {phone.display}
           </a>
           <p className="mt-2">

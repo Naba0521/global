@@ -54,3 +54,125 @@ body {
 .font-display {
   font-family: var(--font-syne), "Pretendard", sans-serif;
 }
+
+.marquee-track {
+  animation: marquee 42s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.io [data-rise]:not(.in) {
+    opacity: 0;
+    transform: translateY(1.35rem);
+  }
+
+  html.io [data-rise] {
+    transition:
+      opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--d, 0) * 75ms);
+  }
+
+  .mask {
+    display: block;
+    overflow: hidden;
+    margin-bottom: -0.12em;
+    padding-bottom: 0.12em;
+  }
+
+  .enter {
+    animation: rise 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--d, 0) * 120ms + 0.15s);
+  }
+
+  html.io [data-rise] .rule {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--d, 0) * 75ms + 180ms);
+  }
+
+  html.io [data-rise].in .rule {
+    transform: scaleX(1);
+  }
+
+  html.io [data-frame] .frame-photo {
+    transform: scale(1.16);
+    transition: transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--d, 0) * 75ms);
+  }
+
+  html.io [data-frame].in .frame-photo {
+    transform: scale(1);
+  }
+
+  html.io [data-frame].in.group:hover .frame-photo {
+    transform: scale(1.05);
+  }
+
+  .menu-panel {
+    animation: menu-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .menu-item {
+    animation: rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--d, 0) * 50ms + 0.08s);
+  }
+
+  .nav-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    transition:
+      background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link[data-active="true"] {
+    background-size: 100% 1px;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.15rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .menu-panel,
+  .menu-item {
+    animation: none;
+  }
+}
